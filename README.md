@@ -2,16 +2,19 @@
 
 A simple web app to explore your Renogy devices using the DC Home API endpoints.
 
+Your Renogy One Core needs to be able to access [DC Home](http://one.renogy.com) via the internet, configuration of that is left up to the user.
+
 1. Get your API Access and Secret key from [Renogy API Key Management](https://platform.renogy.com/apikey/)
 2. Add them to `.env`
  -    RENOGY_ACCESS_KEY="ak-...."
  -    RENOGY_SECRET_KEY="sk-...."
-3. Start the server with `npm run dev`
-4. Point your web browser at `http://localhost:5173`
+3. Install the dependencies with `npm install`
+4. Start the server with `npm run dev`
+5. Point your web browser at [http://localhost:5173](http://localhost:5173)
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```sh
 npm run dev
