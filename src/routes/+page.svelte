@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { DeviceCard } from '$lib';
 
   let devices = $state<any[]>([]);
   let error = $state<string | null>(null);
@@ -86,44 +87,7 @@
   {:else}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {#each devices as device (device.deviceId)}
-        <div class="bg-white rounded-lg shadow-md p-6 border-l-4" class:border-green-500={device.onlineStatus === 'online'} class:border-gray-300={device.onlineStatus !== 'online'}>
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-gray-700"><a href="/device/{device.deviceId}?name={encodeURIComponent(device.name)}&category={encodeURIComponent(device.category)}" class="text-blue-500 hover:underline">{device.name}</a></h2>
-            <div class="flex gap-2">
-              <span class="px-3 py-1 text-sm font-semibold rounded-full" class:bg-green-100={device.onlineStatus === 'online'} class:text-green-800={device.onlineStatus === 'online'} class:bg-gray-100={device.onlineStatus !== 'online'} class:text-gray-800={device.onlineStatus !== 'online'} >
-                {device.onlineStatus}
-              </span>
-              {#if deviceAlarms[device.deviceId] && deviceAlarms[device.deviceId].length > 0}
-                <span class="px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800">
-                  {deviceAlarms[device.deviceId].length} Alarm{deviceAlarms[device.deviceId].length !== 1 ? 's' : ''}
-                </span>
-              {/if}
-            </div>
-          </div>
-          {#if device.isSubDevice}
-            <p class="text-sm text-gray-500 mb-2">Sub-device of: {device.parentDeviceName}</p>
-          {/if}
-          <div class="text-gray-600">
-            <p><strong>Category:</strong> {device.category}</p>
-            <p><strong>SKU:</strong> {device.sku || 'N/A'}</p>
-            <p><strong>Device ID:</strong> <span class="font-mono text-sm">{device.deviceId}</span></p>
-          </div>
-          {#if deviceAlarms[device.deviceId] && deviceAlarms[device.deviceId].length > 0}
-            <div class="mt-4 p-3 bg-red-50 rounded-lg">
-              <h3 class="text-sm font-semibold text-red-800 mb-2">Active Alarms:</h3>
-              <ul class="space-y-1">
-                {#each deviceAlarms[device.deviceId] as alarm}
-                  <li class="text-xs text-red-700">
-                    <span class="font-semibold">{alarm.alarmName || alarm.code}</span>
-                    {#if alarm.alarmLevel}
-                      <span class="ml-2 text-red-600">({alarm.alarmLevel})</span>
-                    {/if}
-                  </li>
-                {/each}
-              </ul>
-            </div>
-          {/if}
-        </div>
+        <DeviceCard {device} deviceAlarms={deviceAlarms[device.deviceId]} />
       {/each}
     </div>
   {/if}
