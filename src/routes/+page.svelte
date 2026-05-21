@@ -77,6 +77,15 @@
       <div class="w-32 h-[2px] mx-auto mt-6 bg-gradient-to-r from-cyber-cyan to-cyber-purple relative">
         <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyber-cyan rotate-45 border border-black shadow-[0_0_8px_var(--color-cyber-cyan)]"></div>
       </div>
+
+      <div class="mt-8 flex justify-center relative z-20">
+        <a 
+          href="/live" 
+          class="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-mono font-bold uppercase tracking-widest bg-gradient-to-r from-cyber-cyan to-cyber-purple border border-transparent rounded-lg text-black hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(0,243,255,0.2)] hover:shadow-[0_0_25px_rgba(189,0,255,0.4)] animate-pulse-glow"
+        >
+          🛰️ Launch Live Terminal
+        </a>
+      </div>
     </div>
   </header>
 
