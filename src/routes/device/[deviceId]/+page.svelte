@@ -58,9 +58,11 @@
         const currentMonth = new Date().getMonth(); // 0-indexed
         const previousMonth = (currentMonth - 1 + 12) % 12; // Handle month wraparound
 
+        const localUtcOffset = Math.round(new Date().getTimezoneOffset() / -60);
+
         const [currentMonthResponse, previousMonthResponse] = await Promise.all([
-          fetch(`/api/renogy/device/data/history/${deviceId}?year=${currentYear}&month=${currentMonth + 1}&utcOffsetHours=-8`),
-          fetch(`/api/renogy/device/data/history/${deviceId}?year=${currentYear}&month=${previousMonth + 1}&utcOffsetHours=-8`)
+          fetch(`/api/renogy/device/data/history/${deviceId}?year=${currentYear}&month=${currentMonth + 1}&utcOffsetHours=${localUtcOffset}`),
+          fetch(`/api/renogy/device/data/history/${deviceId}?year=${currentYear}&month=${previousMonth + 1}&utcOffsetHours=${localUtcOffset}`)
         ]);
 
         if (currentMonthResponse.ok) {
