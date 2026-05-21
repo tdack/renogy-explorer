@@ -32,45 +32,93 @@
             labels: currentMonthData.map(d => new Date(d.ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
             datasets: [
               {
-                label: 'Current Month',
+                label: 'Current Month (Wh)',
                 data: currentMonthData.map(d => d.generatePower),
-                borderColor: '#3B82F6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                tension: 0.3,
+                borderColor: '#00f3ff',
+                backgroundColor: 'rgba(0, 243, 255, 0.04)',
+                pointBorderColor: '#00f3ff',
+                pointBackgroundColor: '#050508',
+                pointHoverBackgroundColor: '#00f3ff',
+                pointHoverBorderColor: '#fff',
+                tension: 0.35,
                 fill: true
               },
               {
-                label: 'Previous Month',
+                label: 'Previous Month (Wh)',
                 data: previousMonthData.map(d => d.generatePower),
-                borderColor: '#10B981',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                tension: 0.3,
+                borderColor: '#bd00ff',
+                backgroundColor: 'rgba(189, 0, 255, 0.04)',
+                pointBorderColor: '#bd00ff',
+                pointBackgroundColor: '#050508',
+                pointHoverBackgroundColor: '#bd00ff',
+                pointHoverBorderColor: '#fff',
+                tension: 0.35,
                 fill: true
               }
             ]
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
               legend: {
-                position: 'top' as const
+                position: 'top' as const,
+                labels: {
+                  color: '#94a3b8',
+                  font: {
+                    family: 'Outfit',
+                    size: 12,
+                    weight: 'normal'
+                  }
+                }
               },
               title: {
-                display: true,
-                text: 'Solar Yield Comparison'
+                display: false
               }
             },
             scales: {
               x: {
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.04)'
+                },
+                ticks: {
+                  color: '#64748b',
+                  font: {
+                    family: 'Outfit',
+                    size: 10
+                  }
+                },
                 title: {
                   display: true,
-                  text: 'Date'
+                  text: 'Telemetry Timeline (Days)',
+                  color: '#475569',
+                  font: {
+                    family: 'Outfit',
+                    size: 11,
+                    weight: 'bold'
+                  }
                 }
               },
               y: {
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.04)'
+                },
+                ticks: {
+                  color: '#64748b',
+                  font: {
+                    family: 'Outfit',
+                    size: 10
+                  }
+                },
                 title: {
                   display: true,
-                  text: 'Watt-hours (Wh)'
+                  text: 'Watt-hours Generated (Wh)',
+                  color: '#475569',
+                  font: {
+                    family: 'Outfit',
+                    size: 11,
+                    weight: 'bold'
+                  }
                 }
               }
             }
