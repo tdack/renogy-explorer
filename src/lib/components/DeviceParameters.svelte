@@ -26,25 +26,25 @@
   }
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
   {#each Object.entries(details) as [key, value]}
     {@const info = getParameterInfo(key)}
     {@const formatted = formatParameterValue(key, value, info)}
-    <div class="flex flex-col justify-between p-4 border rounded-lg bg-gray-50">
+    <div class="flex flex-col justify-between p-5 border border-gray-800/60 rounded-xl bg-black/40 hover:border-cyber-cyan/40 hover:bg-black/60 transition-all duration-200">
       <div>
-        <p class="text-sm font-semibold text-gray-600 capitalize">
+        <p class="text-xs font-semibold text-gray-500 capitalize tracking-widest font-mono">
           {info.desc || key.replace(/([A-Z])/g, ' $1')}
         </p>
-        <p class="text-2xl font-bold text-gray-800">
+        <p class="text-2xl font-extrabold text-white mt-1 font-sans">
           {formatted.value}
           {#if formatted.unit}
-            <span class="text-lg font-normal text-gray-500">{formatted.unit}</span>
+            <span class="text-sm font-medium text-cyber-cyan tracking-wider">{formatted.unit}</span>
           {/if}
         </p>
       </div>
-      <div class="text-xs text-gray-400 mt-2">
-        {#if info.operation}<span>{info.operation}</span>{/if}
-        {#if info.type}<span class="ml-2">({info.type})</span>{/if}
+      <div class="text-[10px] text-gray-500 mt-4 pt-2.5 border-t border-gray-800/40 font-mono flex items-center justify-between uppercase tracking-widest">
+        <span>{info.operation || 'Telemetry'}</span>
+        {#if info.type}<span class="text-cyber-purple/80">[{info.type}]</span>{/if}
       </div>
     </div>
   {/each}
