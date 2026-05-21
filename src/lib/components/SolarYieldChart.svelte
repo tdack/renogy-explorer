@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import Chart from 'chart.js/auto';
 
   interface YieldData {
@@ -21,12 +21,14 @@
     previousMonthData = [] 
   }: Props = $props();
 
+  let canvasElement = $state<HTMLCanvasElement>();
+  let chartInstance: Chart | null = null;
+
   onMount(async () => {
     if (currentMonthData.length > 0 || previousMonthData.length > 0) {
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM to render
-      const canvas = document.getElementById('solarYieldChart') as HTMLCanvasElement;
-      if (canvas) {
-        new Chart(canvas.getContext('2d')!, {
+      if (canvasElement) {
+        chartInstance = new Chart(canvasElement.getContext('2d')!, {
           type: 'line',
           data: {
             labels: currentMonthData.map(d => new Date(d.ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
@@ -127,8 +129,14 @@
       }
     }
   });
+
+  onDestroy(() => {
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+  });
 </script>
 
 <div class="relative h-96">
-  <canvas id="solarYieldChart"></canvas>
+  <canvas bind:this={canvasElement}></canvas>
 </div>
