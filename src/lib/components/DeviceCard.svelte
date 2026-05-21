@@ -42,14 +42,7 @@
     </h2>
     <div class="flex flex-col sm:flex-row gap-2 items-end sm:items-center">
       <span 
-        class="px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider border transition-all duration-300" 
-        class:bg-cyber-cyan\/10={device.onlineStatus === 'online'} 
-        class:text-cyber-cyan={device.onlineStatus === 'online'} 
-        class:border-cyber-cyan\/30={device.onlineStatus === 'online'}
-        class:shadow-\[0_0_10px_rgba\(0\,243\,255\,0\.2\)\]={device.onlineStatus === 'online'}
-        class:bg-gray-800\/60={device.onlineStatus !== 'online'} 
-        class:text-gray-500={device.onlineStatus !== 'online'}
-        class:border-gray-700\/40={device.onlineStatus !== 'online'}
+        class="px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider border transition-all duration-300 {device.onlineStatus === 'online' ? 'bg-cyber-cyan/10 text-cyber-cyan border-cyber-cyan/30 shadow-[0_0_10px_rgba(0,243,255,0.2)]' : 'bg-gray-800/60 text-gray-500 border-gray-700/40'}" 
       >
         {device.onlineStatus}
       </span>
