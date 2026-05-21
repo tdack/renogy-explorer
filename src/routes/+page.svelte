@@ -5,6 +5,7 @@
   let devices = $state<any[]>([]);
   let error = $state<string | null>(null);
   let isLoading = $state(true);
+  const deviceAlarms = $state<Record<string, any[]>>({});
 
   onMount(async () => {
     try {
@@ -28,6 +29,20 @@
         }
         devices = mappedDevices;
 
+        // Fetch alarms directly for loaded devices
+        const alarmPromises = mappedDevices.map(async (device: any) => {
+          try {
+            const alarmResponse = await fetch(`/api/renogy/device/alarm/${device.deviceId}`);
+            if (alarmResponse.ok) {
+              const alarms = await alarmResponse.json();
+              deviceAlarms[device.deviceId] = alarms;
+            }
+          } catch (e: any) {
+            console.error(`Alarm fetch error for ${device.deviceId}:`, e);
+          }
+        });
+        await Promise.all(alarmPromises);
+
       } else {
         const errorData = await response.json();
         error = errorData.error || 'Failed to fetch devices.';
@@ -38,26 +53,6 @@
       console.error('Fetch Error:', e);
     } finally {
       isLoading = false;
-    }
-  });
-
-  // Fetch alarms for each device
-  const deviceAlarms = $state<Record<string, any[]>>({});
-
-  onMount(async () => {
-    if (isLoading) return;
-    
-    try {
-      const alarmPromises = devices.map(async (device: any) => {
-        const response = await fetch(`/api/renogy/device/alarm/${device.deviceId}`);
-        if (response.ok) {
-          const alarms = await response.json();
-          deviceAlarms[device.deviceId] = alarms;
-        }
-      });
-      await Promise.all(alarmPromises);
-    } catch (e: any) {
-      console.error('Alarm fetch error:', e);
     }
   });
 </script>
